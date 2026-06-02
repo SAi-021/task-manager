@@ -1,4 +1,4 @@
-"""Application configuration loaded from environment variables."""
+﻿"""Application configuration loaded from environment variables."""
 from __future__ import annotations
 
 import os
@@ -7,8 +7,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-# Load variables from backend/.env into the environment (if the file exists).
-load_dotenv(Path(__file__).resolve().parents[1] / ".env")
+load_dotenv(Path(__file__).resolve().parents[1] / ".env", encoding="utf-8-sig")
 
 
 class Settings:
@@ -19,6 +18,8 @@ class Settings:
     DB_USER: str = os.getenv("DB_USER", "root")
     DB_PASSWORD: str = os.getenv("DB_PASSWORD", "")
     DB_NAME: str = os.getenv("DB_NAME", "taskmanager")
+
+    DB_SSL_CA: str = os.getenv("DB_SSL_CA", "")
 
     SECRET_KEY: str = os.getenv("SECRET_KEY", "change-me-in-production")
     ALGORITHM: str = os.getenv("ALGORITHM", "HS256")
