@@ -1,0 +1,16 @@
+﻿# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.db
+
+# Secret env files - never upload these
+.env
+
+# Node
+node_modules/
+dist/
+
+# OS junk
+.DS_Store

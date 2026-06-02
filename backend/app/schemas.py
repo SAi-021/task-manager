@@ -1,0 +1,60 @@
+"""Pydantic schemas for request and response bodies."""
+from datetime import datetime
+from typing import Optional
+
+from pydantic import BaseModel, EmailStr, Field
+
+from .models import Stage
+
+
+# ---------- Auth ----------
+class UserCreate(BaseModel):
+    name: str = Field(min_length=1, max_length=120)
+    email: EmailStr
+    password: str = Field(min_length=6, max_length=128)
+
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
+
+
+class UserOut(BaseModel):
+    id: int
+    name: str
+    email: EmailStr
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    user: UserOut
+
+
+# ---------- Tasks ----------
+class TaskCreate(BaseModel):
+    title: str = Field(min_length=1, max_length=255)
+    description: Optional[str] = None
+    stage: Stage = Stage.todo
+
+
+class TaskUpdate(BaseModel):
+    title: Optional[str] = Field(default=None, min_length=1, max_length=255)
+    description: Optional[str] = None
+    stage: Optional[Stage] = None
+
+
+class TaskOut(BaseModel):
+    id: int
+    title: str
+    description: Optional[str]
+    stage: Stage
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        from_attributes = True

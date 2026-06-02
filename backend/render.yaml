@@ -1,0 +1,16 @@
+# Render Blueprint — deploys the FastAPI backend.
+# In Render: New > Blueprint > point at this repo (root dir: backend).
+services:
+  - type: web
+    name: task-manager-api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        sync: false          # paste your MySQL URL in the dashboard
+      - key: SECRET_KEY
+        generateValue: true
+      - key: CORS_ORIGINS
+        sync: false          # set to your frontend URL after deploying it
